@@ -1,0 +1,21 @@
+[Desktop Entry]
+Type=Action
+Name[en_EN]=Fix movies subs
+Name[es_ES]=Fix movies subs
+Name[en]=Fix movies subs
+Name[es]=Fix movies subs
+ToolbarLabel[en_EN]=Fix movies subs
+ToolbarLabel[es_ES]=Fix movies subs
+ToolbarLabel[en]=Fix movies subs
+ToolbarLabel[es]=Fix movies subs
+Profiles=profile-zero;
+
+TargetLocation=true
+TargetToolbar=true
+
+[X-Action-Profile profile-zero]
+Name[en_EN]=Fix movies subs
+Name[es_ES]=Fix movies subs
+Name[en]=Fix movies subs
+Name[es]=Fix movies subs
+Exec=/usr/bin/fix_subtitles.py -s -p %f
