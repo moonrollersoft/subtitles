@@ -144,3 +144,6 @@ static
 
 # IDE
 .idea/
+
+# Test
+test_subs/
