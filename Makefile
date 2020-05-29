@@ -9,4 +9,9 @@ all:
 	chmod +x ~/.local/share/nautilus/scripts/fix_movies_subtitles.sh
 	echo python3 ~/subtitles/fix_subtitles.py -m -p "\$$(pwd)" >> ~/.local/share/nautilus/scripts/fix_movies_subtitles.sh
 
+uninstall:
+	rm -rf ~/subtitles
+	rm -f ~/.local/share/nautilus/scripts/fix_series_subtitles.sh
+	rm -f ~/.local/share/nautilus/scripts/fix_movies_subtitles.sh
+
 # GNOME log errors: journalctl -xe
