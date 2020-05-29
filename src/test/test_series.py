@@ -4,7 +4,7 @@ import random
 import shutil
 from pathlib import Path
 
-from fix_subtitles import SubtitlesFixer, OLD_SUBS_DIR
+from src.subtitles_fixer import SubtitlesFixer, ORIGINAL_SUBS_DIR
 
 # Videos and subs match 1x1 at least with season and episode number
 VIDEOS = [
@@ -75,9 +75,9 @@ def generate_random_str():
 def test_series(series_fixture):
     test_path, subs_dir, formatted_videos = series_fixture
     sub_fixer = SubtitlesFixer(test_path)
-    sub_fixer.fix('s')
+    sub_fixer.fix_series()
     assert len(list(Path(os.path.join(test_path, subs_dir)).rglob('*'))) == 0
-    assert len(list(Path(os.path.join(test_path, OLD_SUBS_DIR)).rglob('*'))) == len(SUBS)
+    assert len(list(Path(os.path.join(test_path, ORIGINAL_SUBS_DIR)).rglob('*'))) == len(SUBS)
     for video in formatted_videos:
         video_path = Path(os.path.join(test_path, video))
         assert os.path.exists(video_path.with_suffix(".srt")) or os.path.exists(video_path.with_suffix(".sub"))
