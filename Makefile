@@ -1,15 +1,12 @@
-from-binary:
-	sudo dpkg -i extras/filemanager-actions/filemanager-actions_3.4-3_amd64.deb
-	$(MAKE) installed
+current_dir = $(shell pwd)
 
-download:
-	sudo add-apt-repository -y ppa:daniel-marynicz/filemanager-actions
-	sudo apt update -y
-	sudo apt install -y filemanager-actions-nautilus-extension
-	$(MAKE) installed
+all:
+	cp -rf ../subtitles ~/
+	> ~/.local/share/nautilus/scripts/fix_series_subtitles.sh
+	chmod +x ~/.local/share/nautilus/scripts/fix_series_subtitles.sh
+	echo python3 ~/subtitles/fix_subtitles.py -s -p "\$$(pwd)" >> ~/.local/share/nautilus/scripts/fix_series_subtitles.sh
+	> ~/.local/share/nautilus/scripts/fix_movies_subtitles.sh
+	chmod +x ~/.local/share/nautilus/scripts/fix_movies_subtitles.sh
+	echo python3 ~/subtitles/fix_subtitles.py -m -p "\$$(pwd)" >> ~/.local/share/nautilus/scripts/fix_movies_subtitles.sh
 
-installed:
-	sudo cp fix_subtitles.py /usr/bin/
-	sudo mkdir -p ~/.local/share/file-manager/actions/
-	sudo cp extras/filemanager-actions/movies_entry.desktop ~/.local/share/file-manager/actions/
-	sudo cp extras/filemanager-actions/series_entry.desktop ~/.local/share/file-manager/actions/
+# GNOME log errors: journalctl -xe
