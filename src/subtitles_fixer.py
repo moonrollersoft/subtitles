@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from shutil import move
+from shutil import move, copy
 
 from src.files import VIDEO_FORMATS, SUBTITLE_FORMATS, MovieFile, SeriesFile
 
@@ -47,7 +47,7 @@ class SubtitlesFixer:
         for video in video_files:
             for subtitle in sub_files[:1]:
                 new_sub = video.path.with_suffix(subtitle.path.suffix)
-                new_sub.touch()
+                copy(str(subtitle), str(new_sub))
 
     def _fix_series_subs(self):
         video_files = [SeriesFile(str(s)) for s in self._video_files]
@@ -56,6 +56,6 @@ class SubtitlesFixer:
             try:
                 subtitle = sub_files[video]
                 new_sub = video.path.with_suffix(subtitle.path.suffix)
-                new_sub.touch()
+                copy(str(subtitle), str(new_sub))
             except KeyError:
                 pass
