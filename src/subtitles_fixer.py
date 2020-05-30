@@ -4,7 +4,7 @@ from shutil import move, copy
 
 from src.files import VIDEO_FORMATS, SUBTITLE_FORMATS, MovieFile, SeriesFile
 
-ORIGINAL_SUBS_DIR = 'original_subs'
+ORIGINAL_SUBS_BACKUP_DIR = 'original_subs'
 
 
 class SubtitlesFixer:
@@ -15,17 +15,17 @@ class SubtitlesFixer:
         self._sub_files = self._get_files_recursively(SUBTITLE_FORMATS)
 
     def fix_movies(self):
-        self._move_subs_to_original_dir()
+        self._move_original_subs_to_backup_dir()
         self._fix_movies_subs()
 
     def fix_series(self):
-        self._move_subs_to_original_dir()
+        self._move_original_subs_to_backup_dir()
         self._fix_series_subs()
 
-    def _move_subs_to_original_dir(self):
+    def _move_original_subs_to_backup_dir(self):
         moved_subtitles = []
         if self._sub_files:
-            old_subs_path = os.path.join(self._path, ORIGINAL_SUBS_DIR)
+            old_subs_path = os.path.join(self._path, ORIGINAL_SUBS_BACKUP_DIR)
             Path(old_subs_path).mkdir(exist_ok=True)
             for subtitle in self._sub_files:
                 new_sub = os.path.join(old_subs_path, subtitle.name)
