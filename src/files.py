@@ -2,8 +2,8 @@ from pathlib import Path
 
 from src.series_parser import SeriesFilenameParser
 
-VIDEO_FORMATS = [".mp4", ".mkv", ".avi", ".mov", ".wmv"]
-SUBTITLE_FORMATS = [".srt", ".sub"]
+VIDEO_FORMATS = [".mp4", ".mkv", ".avi", ".mov", ".wmv", ".m4p", ".m4v", ".mpg", ".mpeg", ".m2v"]
+SUBTITLE_FORMATS = [".srt", ".sub", ".ssa", ".ass"]
 
 
 class FilmFile:
