@@ -9,12 +9,17 @@ Just automates the subtitles renaming job.
 * [python](https://www.python.org/downloads/) >= 3.5
 
 ## Use ##
-Download/clone the project, move inside and execute:
-```sh
-python fix_subtitles.py -s -p /path/to/my/serie
+Download/clone the project, move inside:
+ ```sh
+ cd /subtitles
 ```
-**subtitles** will recursively search all the video and subtitles files under the provided path, then it will rename 
-the subtitles as the video files if the name matches (it excludes the format suffix).
+and execute:
+```sh
+python fix_subtitles.py -s -p /path/to/my/series/dir
+```
+**subtitles** will recursively search all the video and subtitles files under 
+the provided path, then it will try to rename the subtitle as the video files 
+if the season/episode matches.
  
 ## Execution options ##
 **subtitles** execution options:
@@ -22,24 +27,50 @@ the subtitles as the video files if the name matches (it excludes the format suf
 * **-s --series** Fix series subtitles, matching seasons/episodes
 * **-m --movies** Fix movies subtitles
 
-### Example ###
-Fixing a movie subtitle:
+## Examples ##
+Fixing series subtitles:
 ```sh
-python fix_subtitles.py -s -m /path/to/my/movie
+python fix_subtitles.py -s -p /path/to/my/series
 ```
 
-### Extras ###
-In order avoid the terminal and ease the usage of **subtitles** in Ubuntu's Nautilus, a Makefile is provided. When 
-executed, it will try to install a preconfigured filemanager package, adding two actions to be launched through the 
-file manager's context menu. Tested in Ubuntu 18.04.
+Fixing a movie subtitle:
+```sh
+python fix_subtitles.py -m -p /path/to/my/movie
+```
 
+## Extras ##
+In order avoid the terminal and ease the usage of **subtitles** in Ubuntu's 
+Nautilus file manager, a Makefile is provided. When executed, you will be able
+to use **subtitles** right-clicking on any file, being inside the series/movie directory
+you want to fix. Tested in Ubuntu 18.04.
+
+### Installation ###
 In the project root execute: 
 ```sh
 make
 ```
+If the execution was successful, you can got to the series dir you need to fix and
+right-click on any file and two new options will be displayed inside the "Scripts" 
+option: "fixseries" and "fixmovies".
 
-If the execution was successful, you can use the right click on Nautilus and two new options will be displayed: "Fix 
-movies" and "Fix series". 
+### Uninstall ###
+In the project root execute: 
+```sh
+make uninstall
+```
+
+
+## Disclaimer ##
+All the original subtitles are stored inside a new "original_subs" directory, so do not worry 
+if something goes wrong or you click on "fixmovies" and you meant "fixseries", you can recover 
+the original ones.
+
+## Test ##
+Execute:
+```sh
+pip install -r src/test/requirements-test.txt
+pytest src/test/
+```
 
 
 ## License
