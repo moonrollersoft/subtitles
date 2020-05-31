@@ -53,6 +53,10 @@ If the execution was successful, you can got to the series dir you need to fix a
 right-click on any file and two new options will be displayed inside the "Scripts" 
 option: "fixseries" and "fixmovies".
 
+![alt text](https://github.com/moonrollersoft/subtitles/blob/master/extras/images/fix_example_1.png "Fix example 1")
+
+![alt text](https://github.com/moonrollersoft/subtitles/blob/master/extras/images/fix_example_2.png "Fix example 2")
+
 ### Uninstall ###
 In the project root execute: 
 ```sh
