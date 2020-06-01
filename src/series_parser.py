@@ -1,6 +1,6 @@
 import re
 
-SERIES_SEPARATOR_GROUP_REGEX = '([eE]|[xX])'
+SERIES_SEPARATOR_GROUP_REGEX = '( ?[eE]| ?[xX])'
 SERIES_GROUPS_REGEX = r'([0-9]+){}([0-9]+)'.format(SERIES_SEPARATOR_GROUP_REGEX)
 
 
