@@ -72,8 +72,8 @@ the original ones.
 ## Test ##
 Execute:
 ```sh
-pip install -r src/test/requirements-test.txt
-pytest src/test/
+pip install -r requirements-test.txt
+pytest
 ```
 
 

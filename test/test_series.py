@@ -4,6 +4,7 @@ import random
 import shutil
 from pathlib import Path
 
+from src.files import SUBTITLE_FORMATS
 from src.subtitles_fixer import SubtitlesFixer, ORIGINAL_SUBS_BACKUP_DIR
 
 # Videos and subs match 1x1 at least with season and episode number
@@ -44,7 +45,11 @@ SUBS = [
 def series_fixture():
     test_dir = './test_subs'
     subs_dir = 'subs'
-    print('Setup, creating dir: "{}" with video and subtitle files'.format(test_dir))
+    print(
+        'Setup, creating dir: "{}" with video and subtitle files'.format(
+            test_dir
+        )
+    )
     test_subs_dir = os.path.join(test_dir, subs_dir)
     Path(test_dir).mkdir(exist_ok=True)
     Path(test_subs_dir).mkdir(exist_ok=True)
@@ -69,15 +74,31 @@ def series_fixture():
 
 def generate_random_str():
     non_numeric_ascii_range = (58, 200)
-    return "".join([chr(n) for n in random.sample(range(*non_numeric_ascii_range), random.randint(0, 30))])
+    return "".join(
+        [
+            chr(n)
+            for n in random.sample(
+                range(*non_numeric_ascii_range), random.randint(0, 30)
+            )
+        ]
+    )
 
 
-def test_series(series_fixture):
+def test_fix_series_creates_subtitles(series_fixture):
     test_path, subs_dir, formatted_videos = series_fixture
     sub_fixer = SubtitlesFixer(test_path)
     sub_fixer.fix_series()
-    assert len(list(Path(os.path.join(test_path, subs_dir)).rglob('*'))) == 0
-    assert len(list(Path(os.path.join(test_path, ORIGINAL_SUBS_BACKUP_DIR)).rglob('*'))) == len(SUBS)
+    assert not list(Path(os.path.join(test_path, subs_dir)).rglob('*'))
+    backup_subtitles_files = []
+    for sub_format in SUBTITLE_FORMATS:
+        backup_subtitles_files.extend(
+            Path(
+                os.path.join(test_path, ORIGINAL_SUBS_BACKUP_DIR)
+            ).rglob("*{}".format(sub_format))
+        )
+    assert len(backup_subtitles_files) == len(SUBS)
     for video in formatted_videos:
         video_path = Path(os.path.join(test_path, video))
-        assert os.path.exists(video_path.with_suffix(".srt")) or os.path.exists(video_path.with_suffix(".sub"))
+        exist_str_video = os.path.exists(str(video_path.with_suffix(".srt")))
+        exist_sub_video = os.path.exists(str(video_path.with_suffix(".sub")))
+        assert exist_str_video or exist_sub_video

@@ -3,6 +3,7 @@ from pathlib import Path
 from shutil import move, copy
 
 from src.files import VIDEO_FORMATS, SUBTITLE_FORMATS, MovieFile, SeriesFile
+from src.utils import make_dirs
 
 ORIGINAL_SUBS_BACKUP_DIR = 'original_subs'
 
@@ -25,12 +26,32 @@ class SubtitlesFixer:
     def _move_original_subs_to_backup_dir(self):
         moved_subtitles = []
         if self._sub_files:
-            old_subs_path = os.path.join(self._path, ORIGINAL_SUBS_BACKUP_DIR)
-            Path(old_subs_path).mkdir(exist_ok=True)
+            backup_directory_path = os.path.join(
+                self._path, ORIGINAL_SUBS_BACKUP_DIR
+            )
+            make_dirs(backup_directory_path)
             for subtitle in self._sub_files:
-                new_sub = os.path.join(old_subs_path, subtitle.name)
-                move(subtitle, new_sub)
-                moved_subtitles.append(Path(new_sub))
+                subtitle_backup_directory = self._path
+                if (
+                    os.path.normpath(self._path)
+                    !=
+                    os.path.normpath(str(subtitle))
+                ):
+                    subtitle_path_directory_part = str(
+                        subtitle.parent.relative_to(
+                            self._path
+                        )
+                    )
+                    subtitle_backup_directory = os.path.join(
+                        self._path, ORIGINAL_SUBS_BACKUP_DIR,
+                        subtitle_path_directory_part
+                    )
+                    make_dirs(subtitle_backup_directory)
+                new_sub_path = os.path.join(
+                    subtitle_backup_directory, subtitle.name
+                )
+                move(str(subtitle), new_sub_path)
+                moved_subtitles.append(Path(new_sub_path))
 
         self._sub_files = moved_subtitles
 
